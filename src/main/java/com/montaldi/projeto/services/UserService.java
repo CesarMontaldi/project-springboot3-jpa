@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.montaldi.projeto.entities.User;
 import com.montaldi.projeto.repositories.UserRepository;
+import com.montaldi.projeto.services.excepitions.ResourceNotFoundException;
 
 @Service 
 public class UserService {
@@ -23,7 +24,7 @@ public class UserService {
 	// #Metodo para retornar usuário da base de dados pelo Id.
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));  
 	}
 	
 	public User insert(User obj) {
